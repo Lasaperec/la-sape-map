@@ -9,6 +9,9 @@
     "three": "^0.157.0",
     "react-force-graph-3d": "^1.69.0"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
