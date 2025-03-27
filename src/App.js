@@ -2,10 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import ForceGraph3D from 'force-graph';
 
 const App = () => {
-  const containerRef = useRef();
+  const containerRef = useRef(null);
+  const graphRef = useRef(null);
 
   useEffect(() => {
+    if (!containerRef.current) return;
+
     const Graph = ForceGraph3D()(containerRef.current);
+
+    graphRef.current = Graph;
 
     const nodes = [
       { id: 'La Sape Records', group: 'label' },
@@ -39,10 +44,12 @@ const App = () => {
       .nodeLabel('id')
       .nodeAutoColorBy('group')
       .backgroundColor('#000011')
-      .d3Force('charge').strength(-250)
-      .onEngineStop(() => {
-        Graph.zoomToFit(400, 100);
-      });
+      .d3Force('charge').strength(-250);
+
+    // Wait a moment and zoom to fit after rendering begins
+    setTimeout(() => {
+      Graph.zoomToFit(400, 100);
+    }, 1500);
 
     return () => {
       Graph._destructor?.();
